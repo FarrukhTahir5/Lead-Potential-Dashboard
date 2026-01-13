@@ -8,7 +8,7 @@ import json
 import requests
 
 # Adjust path to include the root skydash directory
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../skydash/')))
 
 try:
     from src.skydash.api.client import fetch_all_systems, fetch_system_details, graphql_post
@@ -16,6 +16,8 @@ except ImportError as e:
     print(f"Error importing SkyDash modules: {e}")
     # Fallback for testing if modules not found
     fetch_all_systems = None
+    fetch_system_details = None
+    graphql_post = None
 
 app = FastAPI(title="Lead Potential Dashboard API")
 
@@ -29,8 +31,8 @@ app.add_middleware(
 )
 
 # Load Auth Configuration
-AUTH_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.se_console_monitor_auth.json'))
-SERVER_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../config/servers.json'))
+AUTH_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../skydash/.se_console_monitor_auth.json'))
+SERVER_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../skydash/config/servers.json'))
 
 def get_auth_config():
     with open(AUTH_FILE, 'r') as f:
